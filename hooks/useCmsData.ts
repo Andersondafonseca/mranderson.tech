@@ -1,178 +1,145 @@
 import { useCallback } from 'react';
 import { BlogPost, Project, SpeakingTopic, TimelineEvent, Book, BookLandingPageData, NavLink, SocialLinks, SpeakingPageData } from '../types';
 import { 
+    mockNavLinks, 
+    mockSocialLinks, 
+    mockBlogPosts, 
+    mockProjects, 
     mockSpeakingPageData, 
     mockSpeakingTopics, 
     mockTimelineEvents, 
     mockBooks, 
-    mockBookLandingPages, 
+    mockBookLandingPages 
 } from '../data/mockData';
 
+const API_BASE_URL = 'https://mranderson.tech/wp-json/mranderson-api/v1';
+const PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://thingproxy.freeboard.io/fetch/',
+];
+
 /**
- * ===================================================================================
- * NOTE: The direct connection to the WordPress API is failing despite correct
- * CORS headers on the server. This likely indicates a network or firewall issue
- * on the server's hosting environment that is blocking requests.
- *
- * As a temporary workaround to get the site operational, we are using
- * a CORS proxy. This is NOT a permanent solution, as free proxies are unreliable
- * and can go down at any time, as has happened multiple times.
- *
- * The root cause on the mranderson.tech server should be investigated.
- * ===================================================================================
+ * Fetches data with a fallback proxy system. Returns null on complete failure.
+ * Logs warnings to the console for diagnostics without throwing errors.
  */
-
-const API_BASE_URL = 'https://mranderson.tech/wp-json';
-const PROXY_URL = 'https://corsproxy.io/?'; // Swapped to a new proxy
-
-// --- Helper Functions ---
-
-// A single, reusable fetch function that uses a CORS proxy to bypass network issues.
-const fetchWithProxy = async (url: string) => {
-    const response = await fetch(`${PROXY_URL}${url}`);
-
-    if (!response.ok) {
-        let errorMessage = `Network response was not ok for url: ${url}`;
-        try {
-            // Try to get a more specific error message from the API response body
-            const errorData = await response.json();
-            if (errorData.message) {
-                errorMessage = `API Error for ${url}: ${errorData.message}`;
-            }
-        } catch (e) { 
-            // Could not parse JSON, stick with the original network error
+async function fetchData<T>(endpoint: string): Promise<T | null> {
+    const fullUrl = `${API_BASE_URL}${endpoint}`;
+    
+    // 1. Try direct fetch
+    try {
+        const response = await fetch(fullUrl);
+        if (response.ok) {
+            // console.log(`Direct fetch successful for: ${fullUrl}`);
+            return await response.json();
         }
-        throw new Error(errorMessage);
+        if (response.status !== 404) {
+            console.warn(`Direct fetch for ${fullUrl} failed with status: ${response.status} ${response.statusText}`);
+        }
+    } catch (error) {
+        console.warn(`Direct fetch for ${fullUrl} failed. This is likely a CORS issue. Trying proxies...`);
     }
-    return response.json();
-};
 
-// Helper to strip HTML tags, useful for excerpts
-const stripHtml = (html: string) => {
-    if (typeof document !== 'undefined') {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || "";
+    // 2. Try proxies if direct fetch fails
+    for (const proxy of PROXIES) {
+        const proxyUrl = `${proxy}${encodeURIComponent(fullUrl)}`;
+        try {
+            const response = await fetch(proxyUrl);
+            if (response.ok) {
+                console.log(`Successfully fetched via proxy: ${proxy.split('/')[2]} for ${fullUrl}`);
+                return await response.json();
+            }
+            if (response.status !== 404) {
+                 console.warn(`Proxy fetch via ${proxy.split('/')[2]} failed for ${fullUrl}. Status: ${response.status}`);
+            }
+        } catch (error) {
+            console.warn(`Proxy fetch via ${proxy.split('/')[2]} threw an error for ${fullUrl}.`, error);
+        }
     }
-    // Fallback for non-browser environments
-    return html.replace(/<[^>]+>/g, '');
-};
 
-// --- Data Mapping Functions ---
+    // 3. If all attempts fail, return null. The calling function will handle the fallback.
+    return null;
+}
 
-const mapToBlogPost = (post: any): BlogPost => {
-    const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
-    const categories = post._embedded?.['wp:term']?.[0];
-    return {
-        slug: post.slug,
-        title: post.title.rendered,
-        summary: stripHtml(post.excerpt.rendered),
-        imageUrl: featuredMedia?.source_url || 'https://picsum.photos/800/600',
-        category: categories?.[0]?.name || 'Uncategorized',
-        publishDate: post.date,
-        content: post.content.rendered,
-    };
-};
-
-// Maps data from a 'projects' custom post type endpoint
-const mapToProject = (project: any): Project => {
-    // Assumes you are using Advanced Custom Fields (ACF) plugin for custom fields
-    const acf = project.acf || {};
-    return {
-        name: project.title.rendered,
-        description: acf.description || '',
-        link: acf.link || '#',
-        icon: acf.icon || 'fas fa-rocket', // Default icon if not set
-    };
-};
-
-
-// --- THE HOOK ---
+// Simple mapper for blog posts, assuming a standard-ish WP REST API structure
+const mapWpPostToBlogPost = (post: any): BlogPost => ({
+    slug: post.slug || '',
+    title: post.title?.rendered || 'Post sem título',
+    summary: post.excerpt?.rendered.replace(/<p>|<\/p>|\[&hellip;\]/g, '').trim() || '', // Clean up excerpt
+    imageUrl: post.fimg_url || post.featured_image_url || `https://picsum.photos/seed/${post.id}/800/600`,
+    category: post.categories_names?.[0] || 'Sem categoria',
+    publishDate: post.date || new Date().toISOString(),
+    content: post.content?.rendered || '',
+});
 
 export const useCmsData = () => {
-
-    const fetchFromApi = useCallback(async <T>(endpoint: string, mappingFn: (item: any) => T | null, isSingleItem: boolean = false): Promise<T | T[] | null> => {
-        const url = `${API_BASE_URL}${endpoint}`;
-        try {
-            const data = await fetchWithProxy(url);
-            if (isSingleItem) {
-                const item = Array.isArray(data) ? data[0] : data;
-                return item ? mappingFn(item) : null;
-            }
-            return Array.isArray(data) ? data.map(mappingFn).filter(Boolean) as T[] : [];
-        } catch (error) {
-            console.error(`Failed to fetch from ${endpoint}:`, error);
-            return isSingleItem ? null : [];
-        }
+    const getBlogPosts = useCallback(async (): Promise<BlogPost[]> => {
+        const data = await fetchData<any[]>('/posts');
+        if (data) return data.map(mapWpPostToBlogPost);
+        console.warn("CMS: Falha ao buscar posts do blog. Usando dados de fallback.");
+        return mockBlogPosts;
     }, []);
 
-    // --- Public API Functions ---
-
-    // Fetches live blog posts from WordPress
-    const getBlogPosts = useCallback(async (): Promise<BlogPost[]> => {
-        return (await fetchFromApi('/wp/v2/posts?_embed', mapToBlogPost)) as BlogPost[];
-    }, [fetchFromApi]);
-
-    // Fetches a single live blog post from WordPress
     const getPostBySlug = useCallback(async (slug: string): Promise<BlogPost | undefined> => {
-        const post = await fetchFromApi(`/wp/v2/posts?slug=${slug}&_embed`, mapToBlogPost, true);
-        return post as BlogPost | undefined;
-    }, [fetchFromApi]);
-    
-    // Fetches live projects from WordPress custom post type 'projects'
-    const getProjects = useCallback(async (): Promise<Project[]> => {
-        // The endpoint will be '/wp/v2/projects' if you register a post type with the slug 'projects'
-        return (await fetchFromApi('/wp/v2/projects?acf_format=standard', mapToProject)) as Project[];
-    }, [fetchFromApi]);
+        const data = await fetchData<any[]>(`/posts?slug=${slug}`);
+        if (data && data.length > 0) return mapWpPostToBlogPost(data[0]);
+        console.warn(`CMS: Falha ao buscar post com slug "${slug}". Usando dados de fallback.`);
+        return mockBlogPosts.find(p => p.slug === slug);
+    }, []);
 
-    // --- Functions using MOCK DATA to prevent errors ---
-    // These can be converted to fetch from the API once the endpoints are available in WordPress.
+    const getProjects = useCallback(async (): Promise<Project[]> => {
+        const data = await fetchData<Project[]>('/projects');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar projetos. Usando dados de fallback.");
+        return mockProjects;
+    }, []);
   
     const getSpeakingPageData = useCallback(async (): Promise<SpeakingPageData> => {
-        return Promise.resolve(mockSpeakingPageData);
+        const data = await fetchData<SpeakingPageData>('/pages/speaking-data');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar dados da página de palestras. Usando dados de fallback.");
+        return mockSpeakingPageData;
     }, []);
 
     const getSpeakingTopics = useCallback(async (): Promise<SpeakingTopic[]> => {
-        return Promise.resolve(mockSpeakingTopics);
+        const data = await fetchData<SpeakingTopic[]>('/speaking-topics');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar tópicos de palestras. Usando dados de fallback.");
+        return mockSpeakingTopics;
     }, []);
 
     const getTimelineEvents = useCallback(async (): Promise<TimelineEvent[]> => {
-        return Promise.resolve(mockTimelineEvents);
+        const data = await fetchData<TimelineEvent[]>('/timeline-events');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar eventos da timeline. Usando dados de fallback.");
+        return mockTimelineEvents;
     }, []);
   
     const getBooks = useCallback(async (): Promise<Book[]> => {
-        return Promise.resolve(mockBooks);
+        const data = await fetchData<Book[]>('/books');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar livros. Usando dados de fallback.");
+        return mockBooks;
     }, []);
 
-    const getBookLandingPageData = useCallback(async(slug: string): Promise<BookLandingPageData | null> => {
-        const bookData = mockBookLandingPages.find(p => p.slug === slug) || null;
-        return Promise.resolve(bookData);
+    const getBookLandingPageData = useCallback(async (slug: string): Promise<BookLandingPageData | null> => {
+        const data = await fetchData<BookLandingPageData>(`/book/${slug}`);
+        if (data) return data;
+        console.warn(`CMS: Falha ao buscar dados da página do livro "${slug}". Usando dados de fallback.`);
+        return mockBookLandingPages.find(p => p.slug === slug) || null;
     }, []);
 
-    const getNavLinks = useCallback(async(): Promise<NavLink[]> => {
-        // Fetches from the custom '/mranderson-api/v1/menu/primary_api_menu' endpoint.
-        const url = `${API_BASE_URL}/mranderson-api/v1/menu/primary_api_menu`;
-        try {
-            const data = await fetchWithProxy(url);
-            if (!Array.isArray(data)) {
-                throw new Error('API response for nav links was not an array.');
-            }
-            return data;
-        } catch (error) {
-            console.error('Failed to fetch nav links from CMS:', error);
-            return []; // Return empty array; the Header component will use its own fallback.
-        }
+    const getNavLinks = useCallback(async (): Promise<NavLink[]> => {
+        const data = await fetchData<NavLink[]>('/menu/primary_api_menu');
+        if (data && data.length > 0) return data;
+        console.warn("CMS: Falha ao buscar links de navegação. Usando dados de fallback.");
+        return mockNavLinks;
     }, []);
 
-    const getSocialLinks = useCallback(async(): Promise<SocialLinks | null> => {
-        // Fetches from the custom '/mranderson-api/v1/social-links' endpoint.
-        const url = `${API_BASE_URL}/mranderson-api/v1/social-links`;
-        try {
-            const data = await fetchWithProxy(url);
-            return data;
-        } catch (error) {
-            console.error('Failed to fetch social links from CMS:', error);
-            return null; // Return null; the Footer component will keep its default state.
-        }
+    const getSocialLinks = useCallback(async (): Promise<SocialLinks> => {
+        const data = await fetchData<SocialLinks>('/social-links');
+        if (data) return data;
+        console.warn("CMS: Falha ao buscar links sociais. Usando dados de fallback.");
+        return mockSocialLinks;
     }, []);
   
     return { getBlogPosts, getPostBySlug, getProjects, getSpeakingPageData, getSpeakingTopics, getTimelineEvents, getBooks, getBookLandingPageData, getNavLinks, getSocialLinks };

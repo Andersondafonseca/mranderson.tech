@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useCmsData } from '../hooks/useCmsData';
@@ -12,17 +11,11 @@ const Header: React.FC = () => {
   useEffect(() => {
     const fetchNavLinks = async () => {
         const data = await getNavLinks();
-        // Add a fallback in case the API fails
-        const defaultLinks = [
-            { name: 'Home', path: '/' }, { name: 'Sobre', path: '/sobre' }, { name: 'Livros', path: '/livros' },
-            { name: 'Palestras', path: '/palestras' }, { name: 'Blog', path: '/blog' },
-            { name: 'Projetos', path: '/projetos' }, { name: 'Contato', path: '/contato' },
-        ];
-        setNavLinks(data && data.length > 0 ? data : defaultLinks);
+        // The getNavLinks hook now handles fallbacks, so we can directly set the state.
+        setNavLinks(data);
     };
     fetchNavLinks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getNavLinks]);
 
   const activeLinkClass = 'text-amber-400 font-semibold';
   const inactiveLinkClass = 'text-slate-300 hover:text-amber-400 transition-colors duration-300';

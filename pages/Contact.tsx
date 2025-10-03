@@ -4,18 +4,16 @@ import { useCmsData } from '../hooks/useCmsData';
 import { SocialLinks } from '../types';
 
 const Contact: React.FC = () => {
-  // Fix: Fetch social links from CMS instead of a static constant.
   const [socialLinks, setSocialLinks] = useState<SocialLinks>({ linkedin: '#', instagram: '#', spotify: '#', youtube: '#' });
   const { getSocialLinks } = useCmsData();
 
   useEffect(() => {
     const fetchLinks = async () => {
         const data = await getSocialLinks();
-        if(data) setSocialLinks(data);
+        setSocialLinks(data);
     };
     fetchLinks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getSocialLinks]);
 
   return (
     <div className="py-16 md:py-24">

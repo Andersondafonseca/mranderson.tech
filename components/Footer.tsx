@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useCmsData } from '../hooks/useCmsData';
 import { SocialLinks } from '../types';
@@ -10,11 +9,11 @@ const Footer: React.FC = () => {
   useEffect(() => {
     const fetchLinks = async () => {
         const data = await getSocialLinks();
-        if(data) setSocialLinks(data);
+        // The getSocialLinks hook now handles fallbacks and returns a complete object.
+        setSocialLinks(data);
     };
     fetchLinks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getSocialLinks]);
 
   return (
     <footer className="bg-black border-t border-gray-800">
