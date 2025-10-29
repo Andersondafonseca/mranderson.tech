@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Button from './Button';
 
@@ -6,6 +5,7 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: subjectDefault,
     message: '',
   });
@@ -16,18 +16,35 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    console.log('Form data submitted:', formData);
     
-    // Simulate API call
-    setTimeout(() => {
-      // Simulate success for demo purposes
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: subjectDefault, message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
+    // Use the environment variable for the API URL.
+    const WP_API_URL = process.env.REACT_APP_WP_API_URL || 'https://www.mranderson.tech';
+    const apiEndpoint = `${WP_API_URL}/wp-json/mranderson-api/v1/contact`;
+
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            setStatus('success');
+            setFormData({ name: '', email: '', phone: '', subject: subjectDefault, message: '' });
+            setTimeout(() => setStatus('idle'), 5000);
+        } else {
+            console.error('Submission failed:', await response.json());
+            setStatus('error');
+        }
+    } catch (error) {
+        console.error('An error occurred:', error);
+        setStatus('error');
+    }
   };
 
   return (
@@ -57,6 +74,17 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
             className="mt-1 block w-full px-4 py-3 bg-gray-800 border border-gray-700 text-slate-200 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 placeholder-slate-400"
           />
         </div>
+      </div>
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-slate-300">Telefone/WhatsApp</label>
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          className="mt-1 block w-full px-4 py-3 bg-gray-800 border border-gray-700 text-slate-200 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 placeholder-slate-400"
+        />
       </div>
       <div>
         <label htmlFor="subject" className="block text-sm font-medium text-slate-300">Assunto</label>

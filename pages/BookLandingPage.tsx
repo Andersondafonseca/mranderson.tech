@@ -68,6 +68,11 @@ const BookLandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="text-center md:text-left">
+              <div className="mb-4">
+                <span className="bg-amber-400 text-black text-sm font-bold inline-block px-4 py-1 rounded-full uppercase tracking-wider">
+                  <i className="fas fa-star mr-2"></i>Autor Best-Seller na Amazon
+                </span>
+              </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-100 leading-tight">
                 {pageData.heroHeadline}
               </h1>

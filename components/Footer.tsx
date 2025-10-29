@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCmsData } from '../hooks/useCmsData';
 import { SocialLinks } from '../types';
+import NewsletterSignup from './NewsletterSignup';
 
 const Footer: React.FC = () => {
   const [socialLinks, setSocialLinks] = useState<SocialLinks>({ linkedin: '#', instagram: '#', spotify: '#', youtube: '#' });
@@ -17,8 +18,12 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-black border-t border-gray-800">
-      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Newsletter Section */}
+        <NewsletterSignup />
+
+        {/* Bottom Bar */}
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 border-t border-gray-800 pt-8">
           <p className="text-center text-sm text-slate-400">
             &copy; {new Date().getFullYear()} Mr. Anderson. Todos os direitos reservados.
           </p>

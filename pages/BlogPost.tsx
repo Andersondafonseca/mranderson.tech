@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCmsData } from '../hooks/useCmsData';
 import { BlogPost as BlogPostType } from '../types';
+import BlogPostSkeleton from '../components/skeletons/BlogPostSkeleton';
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,7 +25,7 @@ const BlogPost: React.FC = () => {
   }, [slug]);
 
   if (isLoading) {
-    return <div className="text-center py-20">Carregando...</div>;
+    return <BlogPostSkeleton />;
   }
 
   if (!post) {

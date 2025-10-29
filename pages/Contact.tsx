@@ -52,9 +52,14 @@ const Contact: React.FC = () => {
             </div>
             <div className="bg-gray-900 p-8 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold text-slate-100 mb-4">Informações</h3>
-                 <div className="space-y-3 text-slate-300">
+                 <div className="space-y-4 text-slate-300">
                     <p><i className="fas fa-envelope mr-3 text-amber-400"></i> contato@mranderson.tech</p>
-                    <p><i className="fas fa-map-marker-alt mr-3 text-amber-400"></i> São Paulo, Brasil</p>
+                    <p>
+                        <a href="tel:+5582999361632" className="hover:text-amber-400 transition-colors">
+                            <i className="fab fa-whatsapp mr-3 text-amber-400"></i> +55 (82) 99936-1632
+                        </a>
+                    </p>
+                    <p><i className="fas fa-map-marker-alt mr-3 text-amber-400"></i> Rio de Janeiro, Brasil</p>
                 </div>
             </div>
           </div>

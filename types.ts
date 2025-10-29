@@ -1,5 +1,4 @@
-
-
+// types.ts
 export interface BlogPost {
   slug: string;
   title: string;
@@ -15,6 +14,7 @@ export interface Project {
   description: string;
   link: string;
   icon: string; // Font Awesome class name
+  imageUrl?: string;
 }
 
 export interface SpeakingTopic {
@@ -26,6 +26,7 @@ export interface SpeakingPageData {
   pageTitle: string;
   pageDescription: string;
   featuredVideoId?: string;
+  featuredImageUrl?: string;
 }
 
 export interface TimelineEvent {
@@ -98,4 +99,87 @@ export interface BookLandingPageData {
   finalCtaTitle: string;
   finalCtaButtonText: string;
   guaranteeText: string;
+}
+
+export interface DnsRecord {
+  entry: string;
+  type: 'A' | 'CNAME' | 'NS' | 'SOA' | 'TXT';
+  content: string | string[];
+}
+
+// New Types from Media Kit
+export interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+}
+
+export interface CredentialItem {
+    title: string;
+    items: string[];
+}
+
+export interface MentorshipInfo {
+    title: string;
+    description: string;
+    topics: string[];
+    result: string;
+}
+
+// New type for Authentication
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'customer';
+  whatsapp?: string;
+  googleId?: string;
+  picture?: string;
+  token?: string; // Auth token from backend
+  questionnaireResults?: Record<string, number>; // e.g. { 'porta-1-infra': 25 }
+}
+
+// New types for Questionnaire
+export interface QuestionnaireResult {
+  minScore: number;
+  maxScore: number;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface QuestionnaireSection {
+  title: string;
+  questions: string[];
+}
+
+export interface Questionnaire {
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  sections: QuestionnaireSection[];
+  results: QuestionnaireResult[];
+}
+
+// New types for exclusive area
+export interface ExclusiveVideo {
+    id: number;
+    title: string;
+    description: string;
+    youtubeVideoId: string;
+    thumbnailUrl: string; // From featured image
+}
+
+export interface CommunityQuestion {
+    id: number;
+    question: string;
+    author: string;
+    date: string;
+    status: 'answered' | 'pending';
+    answer?: {
+        text: string;
+        youtubeVideoId?: string;
+    }
 }

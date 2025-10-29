@@ -1,4 +1,5 @@
-import { BlogPost, Project, SpeakingTopic, TimelineEvent, Book, BookLandingPageData, NavLink, SocialLinks, SpeakingPageData } from '../types';
+// types.ts
+import { BlogPost, Project, SpeakingTopic, TimelineEvent, Book, BookLandingPageData, NavLink, SocialLinks, SpeakingPageData, Testimonial, CredentialItem, MentorshipInfo } from '../types';
 
 export const mockNavLinks: NavLink[] = [
     { name: 'Home', path: '/' },
@@ -7,14 +8,15 @@ export const mockNavLinks: NavLink[] = [
     { name: 'Palestras', path: '/palestras' },
     { name: 'Blog', path: '/blog' },
     { name: 'Projetos', path: '/projetos' },
+    { name: 'Media Kit', path: '/media-kit' },
     { name: 'Contato', path: '/contato' },
 ];
 
 export const mockSocialLinks: SocialLinks = {
-    linkedin: 'https://www.linkedin.com/in/examplename/',
-    instagram: 'https://www.instagram.com/examplename/',
-    spotify: 'https://open.spotify.com/show/example',
-    youtube: 'https://www.youtube.com/c/examplename',
+    linkedin: 'https://www.linkedin.com/in/andersondafonseca/',
+    instagram: 'https://www.instagram.com/andersondafonseca/',
+    spotify: 'https://open.spotify.com/show/0FIW4vq59iKMFgEa0DhNfF',
+    youtube: 'https://www.youtube.com/@MisterAndersonFonseca',
 };
 
 export const mockBlogPosts: BlogPost[] = [
@@ -68,78 +70,101 @@ export const mockProjects: Project[] = [
         name: 'Mister Sales',
         description: 'Uma plataforma SaaS inovadora que utiliza inteligência artificial para otimizar o processo de vendas B2B em empresas de tecnologia.',
         link: '#',
-        icon: 'fas fa-chart-line'
+        icon: 'fas fa-chart-line',
+        imageUrl: 'https://picsum.photos/seed/mistersales/800/600',
     },
     {
         name: 'Mister Ovos',
         description: 'Um projeto audacioso que aplica tecnologia de ponta, como IoT e análise de dados, para modernizar a produção e distribuição na avicultura.',
         link: '#',
-        icon: 'fas fa-egg'
+        icon: 'fas fa-egg',
+        imageUrl: 'https://picsum.photos/seed/misterovos/800/600',
     },
     {
         name: 'Podcafé Tech',
         description: 'Podcast onde converso com líderes e inovadores sobre as tendências que estão moldando o futuro da tecnologia e dos negócios no Brasil.',
-        link: '#',
-        icon: 'fas fa-podcast'
+        link: 'https://podcafe.tech/',
+        icon: 'fas fa-podcast',
+        imageUrl: 'https://media.licdn.com/dms/image/v2/D4E22AQHcsazHcFnxjw/feedshare-shrink_1280/feedshare-shrink_1280/0/1714054575364?e=1762387200&v=beta&t=QBUOkp9xmv7RrdtlPApoc7gYR8HH-f0kl4N3Un9ArfU',
     }
 ];
 
 export const mockSpeakingPageData: SpeakingPageData = {
-  pageTitle: 'Palestras',
+  pageTitle: 'Palestras, Treinamentos e Mentorias',
   pageDescription: 'Leve para sua empresa ou evento uma dose de inspiração, estratégia e insights sobre o futuro da tecnologia e dos negócios.',
-  featuredVideoId: 'LXb3EKWsInQ' // Example video ID
+  featuredImageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQG6sOTEG5iwQg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1724967384975?e=1762387200&v=beta&t=TjM4Kyi9-m5rdEylVl-ewXc7C5adw4pRNEGRYyx9hHc'
 };
 
 export const mockSpeakingTopics: SpeakingTopic[] = [
     {
-        title: 'As 7 Portas da TI: Desvendando a Carreira',
-        description: 'Uma palestra baseada no meu livro, explorando os caminhos e competências essenciais para uma carreira de sucesso e propósito em tecnologia.'
+        title: 'As 7 Portas da TI — desbloqueando o potencial da tecnologia',
+        description: 'Como transformar a área de TI em motor de crescimento empresarial.'
     },
     {
-        title: 'Vendas em TI: Do Bit ao Contrato',
-        description: 'Estratégias e táticas para profissionais de tecnologia que precisam vender ideias, projetos e produtos complexos de forma eficaz.'
+        title: 'Do Help Desk à Estratégia',
+        description: 'Como o técnico pode se tornar o protagonista da transformação digital.'
     },
     {
-        title: 'Inovação na Prática: Como Criar Negócios que Importam',
-        description: 'Minha jornada como empreendedor, compartilhando lições sobre como identificar oportunidades, validar ideias e transformar tecnologia em negócios reais.'
+        title: 'Inteligência Artificial e o Futuro do Trabalho',
+        description: 'O impacto real da IA na vida das pessoas e nas empresas.'
     },
     {
-        title: 'O Futuro é Tech: Tendências que Vão Mudar Tudo',
-        description: 'Uma análise profunda sobre as tecnologias emergentes (IA, Blockchain, IoT) e como elas impactarão empresas, carreiras e a sociedade.'
+        title: 'Cultura de Inovação e Liderança Tecnológica',
+        description: 'Como desenvolver mentalidade criativa e coragem para inovar.'
+    },
+    {
+        title: 'Vendas Técnicas com MEDDPICC',
+        description: 'Framework adaptado para quem vende soluções de TI complexas.'
+    },
+    {
+        title: 'Motivação e Orquestração de Times Home Office',
+        description: 'Como construir cultura, pertencimento e engajamento em times distribuídos, unindo propósito e tecnologia para que equipes remotas funcionem em sincronia.'
     }
 ];
 
 export const mockTimelineEvents: TimelineEvent[] = [
     {
-        year: '2005',
-        title: 'Início da Carreira em TI',
-        description: 'Comecei minha jornada no mundo da tecnologia, atuando como desenvolvedor e analista de sistemas em grandes corporações.',
+        year: 'Início dos Anos 2000',
+        title: 'Fundamentos Técnicos no Brasil',
+        description: 'Iniciei a carreira em diversas cidades do Brasil, atuando desde o suporte técnico e docência até a assessoria tecnológica em prefeituras, construindo uma base sólida e multifacetada.',
         icon: 'fas fa-laptop-code'
     },
     {
-        year: '2012',
-        title: 'Transição para Liderança',
-        description: 'Assumi posições de gestão, liderando equipes de alta performance em projetos complexos de transformação digital.',
+        year: '2007',
+        title: 'Experiência Internacional: Japão',
+        description: 'Em uma passagem pelo Japão, atuei com marketing e desenvolvimento de campanhas, ampliando minha visão de mercado e adaptabilidade cultural.',
+        icon: 'fas fa-globe-asia'
+    },
+     {
+        year: '2011-2013',
+        title: 'Vivência na Argentina: Grandes Players',
+        description: 'Residindo na Argentina, trabalhei em multinacionais como Avaya e Lufthansa, desenvolvendo habilidades em vendas e atendimento ao cliente em um ambiente global.',
+        icon: 'fas fa-plane-departure'
+    },
+    {
+        year: '2013-2024',
+        title: 'Liderança em Vendas e CX',
+        description: 'Uma década dedicada a construir e liderar equipes de alta performance em vendas complexas e experiência do cliente em empresas como Figo Software e ACSoftware.',
         icon: 'fas fa-users'
     },
     {
-        year: '2017',
-        title: 'Fundação do Mister Sales',
-        description: 'Dei o salto para o empreendedorismo, criando a Mister Sales para resolver um grande desafio do mercado de vendas de TI.',
+        year: '2023',
+        title: 'Âncora do AC News',
+        description: 'Atuei como âncora do jornal digital AC News por um ano, aprofundando minha experiência em comunicação e mídia digital para o setor de tecnologia.',
+        icon: 'fas fa-tv'
+    },
+    {
+        year: '2020 - Hoje',
+        title: 'Empreendedorismo e Mídia',
+        description: 'Cofundador do Podcafé Tech, um dos principais podcasts de tecnologia, e assumi o desafio como CEO da Mister Sales, aplicando IA para revolucionar vendas.',
         icon: 'fas fa-rocket'
     },
     {
-        year: '2020',
+        year: '2025',
         title: 'Lançamento de "As 7 Portas da TI"',
-        description: 'Publiquei meu primeiro livro, consolidando anos de experiência em um guia prático para profissionais de tecnologia.',
+        description: 'Consolidei mais de duas décadas de experiência em um guia prático para profissionais de tecnologia, compartilhando o mapa para uma carreira de impacto.',
         icon: 'fas fa-book-open'
     },
-    {
-        year: '2022',
-        title: 'Expansão e Novos Projetos',
-        description: 'Iniciei novos empreendimentos, como o Mister Ovos e o Podcafé Tech, diversificando minha atuação e impacto.',
-        icon: 'fas fa-lightbulb'
-    }
 ];
 
 export const mockBooks: Book[] = [
@@ -147,7 +172,7 @@ export const mockBooks: Book[] = [
         slug: 'as-7-portas-da-ti',
         title: 'As 7 Portas da TI',
         summary: 'O guia definitivo para transformar sua carreira em TI, evitando armadilhas e construindo um caminho de sucesso e propósito.',
-        coverImageUrl: 'https://picsum.photos/400/600?grayscale&random=book2',
+        coverImageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQG0i-v0KWsSKA/feedshare-shrink_800/B4DZlUGZXcJgAk-/0/1758052589465?e=1762387200&v=beta&t=F1QyEIVqTGRewI-qAE4oiBu1qfFI6emo9VbUnf9aofc',
     },
     // Futuros livros podem ser adicionados aqui
 ];
@@ -163,7 +188,7 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     heroHeadline: 'O livro que abre as 7 portas para transformar sua carreira em TI — e mostra quais você NÃO deve atravessar.',
     heroSubheadline: 'Um guia prático e direto ao ponto para navegar no complexo mundo da tecnologia, evitar armadilhas e construir uma carreira de sucesso e propósito.',
     heroCtaText: 'Quero meu exemplar agora',
-    coverImageUrl: 'https://picsum.photos/400/600?grayscale&random=book2',
+    coverImageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQG0i-v0KWsSKA/feedshare-shrink_800/B4DZlUGZXcJgAk-/0/1758052589465?e=1762387200&v=beta&t=F1QyEIVqTGRewI-qAE4oiBu1qfFI6emo9VbUnf9aofc',
     youtubeVideoId: 'LXb3EKWsInQ', // Example video ID
 
     // Section 2: Storytelling
@@ -213,3 +238,61 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     guaranteeText: 'Satisfação garantida ou seu dinheiro de volta em 7 dias.',
   }
 ];
+
+// New data from Media Kit
+export const mockTestimonials: Testimonial[] = [
+    {
+        quote: 'Anderson Fonseca meu amigo uma honra dividir o palco com você … Gratidão máxima',
+        author: 'Felipe Prado',
+        role: 'Head of Artificial Intelligence & Cyber Analytics'
+    },
+    {
+        quote: 'Parabéns Mr Anderson Fonseca pela palestra e pelo livro! Forte Abraço!',
+        author: 'Dyogo Andreatta Junqueira',
+        role: 'CEO na ACS Pro e ACCyber Pro'
+    },
+    {
+        quote: 'O treinamento de vendas trouxe para minha equipe o choque que eles precisavam, recomendo muito este trabalho',
+        author: 'Rodrigo Trigo',
+        role: 'CEO da Domo Soluções'
+    }
+];
+
+export const mockMcEvents = [
+    'HackerSec Conference (2023 e 2024)',
+    'Podcafé Summit (2024)',
+    'Roadshows ManageEngine Brasil',
+    'Podcafé On the Road (2025)'
+];
+
+export const mockCredentials: CredentialItem[] = [
+    {
+        title: 'Áreas de Atuação',
+        items: ['Tecnologia', 'Inovação', 'Inteligência Artificial', 'Vendas Técnicas', 'Cultura Digital', 'Liderança', 'Orquestração de Times Remotos']
+    },
+    {
+        title: 'Formação e Credenciais',
+        items: [
+            'Analista de Sistemas',
+            'Especialista em Gestão e Transformação Digital',
+            'Especialista em Gestão de Serviços (ITSM) e Operações (ITOM)',
+            'Especialista em Segurança de Acessos (IAM/PAM) e Endpoints (UEM)',
+            'Criador do framework As 7 Portas da TI',
+            'Criador do framework Mister Sales para vendas complexas',
+            'Diretor Comercial com mais de 10 anos de experiência'
+        ]
+    }
+];
+
+export const mockMentorshipInfo: MentorshipInfo = {
+    title: 'Mentoria para Liderança Remota',
+    description: 'Programa prático e personalizado que ajuda líderes e gestores a criarem rituais de conexão, métricas de produtividade e comunicação de propósito em times híbridos.',
+    topics: [
+        'Criação de cultura digital genuína',
+        'Comunicação empática à distância',
+        'Técnicas para motivar e inspirar remotamente',
+        'Ferramentas para acompanhamento e feedback não invasivo',
+        'Dinâmicas de grupo online'
+    ],
+    result: 'Resultado: equipes mais engajadas, humanas e produtivas, mesmo fora do escritório.'
+};
