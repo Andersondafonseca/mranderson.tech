@@ -1,6 +1,9 @@
 
 
 
+
+
+
 import React from 'react';
 import { HashRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -26,6 +29,11 @@ import Questionnaire from './pages/Questionnaire';
 import CardSkeleton from './components/skeletons/CardSkeleton';
 import BlogPostSkeleton from './components/skeletons/BlogPostSkeleton';
 import MediaKit from './pages/MediaKit';
+import CmsConnectionChecker from './components/CmsConnectionChecker';
+import Domains from './pages/Domains';
+import Dns from './pages/Dns';
+import DebugApi from './pages/DebugApi';
+
 
 // Exclusive Area Sub-Pages
 import ExclusiveDashboard from './pages/exclusive/ExclusiveDashboard';
@@ -48,6 +56,7 @@ const App: React.FC = () => {
     <HashRouter>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-black text-slate-200">
+        <CmsConnectionChecker />
         <Header />
         <main className="flex-grow">
           <Routes>
@@ -64,6 +73,10 @@ const App: React.FC = () => {
             <Route path="/projetos" element={<Projects />} />
             <Route path="/media-kit" element={<MediaKit />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/domains" element={<Domains />} />
+            <Route path="/dns" element={<Dns />} />
+            <Route path="/debug-api" element={<DebugApi />} />
+
 
             {/* Protected Routes */}
             <Route 

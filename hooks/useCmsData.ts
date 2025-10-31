@@ -1,3 +1,4 @@
+
 import { useCallback } from 'react';
 import { BlogPost, Project, SpeakingTopic, TimelineEvent, Book, BookLandingPageData, NavLink, SocialLinks, SpeakingPageData, Testimonial, ExclusiveVideo, CommunityQuestion } from '../types';
 import { 
@@ -15,7 +16,11 @@ import {
 
 // Use an environment variable for the WordPress API URL.
 // This makes the app configurable for deployment on platforms like Vercel.
-const WP_API_URL = process.env.REACT_APP_WP_API_URL || 'https://www.mranderson.tech';
+const WP_API_URL = process.env.REACT_APP_WP_API_URL;
+
+if (!WP_API_URL) {
+  console.error("FATAL: REACT_APP_WP_API_URL environment variable is not set.");
+}
 
 const API_BASE_URL_CUSTOM = `${WP_API_URL}/wp-json/mranderson-api/v1`;
 const API_BASE_URL_WP = `${WP_API_URL}/wp-json/wp/v2`;
@@ -29,6 +34,8 @@ const cache = new Map<string, any>();
  * Returns null on complete failure and logs errors to the console for diagnostics.
  */
 async function fetchData<T>(endpoint: string, baseUrl: string): Promise<T | null> {
+    if (!WP_API_URL) return null; // Don't attempt to fetch if the URL isn't configured.
+    
     const fullUrl = `${baseUrl}${endpoint}`;
     // 1. Check cache first
     if (cache.has(fullUrl)) {

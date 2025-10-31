@@ -1,9 +1,11 @@
+
 import React, { createContext, useState, useContext, useEffect, ReactNode, useCallback } from 'react';
 import { User } from '../types';
 
 // Use the environment variable for the WordPress API URL.
-const WP_API_URL = process.env.REACT_APP_WP_API_URL || 'https://www.mranderson.tech';
-const API_BASE_URL = `${WP_API_URL}/wp-json/mranderson-api/v1`;
+const WP_API_URL = process.env.REACT_APP_WP_API_URL;
+const API_BASE_URL = WP_API_URL ? `${WP_API_URL}/wp-json/mranderson-api/v1` : '';
+
 
 interface GoogleProfile {
   name: string;
@@ -34,6 +36,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(true);
 
   const authFetch = useCallback(async (endpoint: string, options: RequestInit = {}) => {
+    if (!API_BASE_URL) {
+      throw new Error("API URL is not configured. Please set REACT_APP_WP_API_URL.");
+    }
     const token = user?.token || localStorage.getItem('authToken');
     const headers = new Headers(options.headers || {});
     if (token) {
@@ -52,6 +57,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Effect for initializing the logged-in user from storage
   useEffect(() => {
     const validateToken = async () => {
+      if (!API_BASE_URL) {
+        setIsLoading(false);
+        return;
+      }
       try {
         const storedToken = localStorage.getItem('authToken');
         if (storedToken) {
@@ -92,6 +101,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }
 
   const login = async (email: string, pass: string) => {
+    if (!API_BASE_URL) return { user: null, error: 'API não configurada.' };
     try {
         const response = await fetch(`${API_BASE_URL}/users/login`, {
             method: 'POST',
@@ -109,6 +119,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
   
   const loginWithGoogle = async (profile: GoogleProfile) => {
+    if (!API_BASE_URL) return { user: null, error: 'API não configurada.' };
     try {
       const response = await fetch(`${API_BASE_URL}/users/google-login`, {
         method: 'POST',
@@ -126,6 +137,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const register = async (name: string, email: string, password: string, whatsapp: string) => {
+    if (!API_BASE_URL) return { user: null, error: 'API não configurada.' };
     try {
         const response = await fetch(`${API_BASE_URL}/users/register`, {
             method: 'POST',

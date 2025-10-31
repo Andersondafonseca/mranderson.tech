@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Button from './Button';
 
@@ -21,7 +22,12 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
     setStatus('submitting');
     
     // Use the environment variable for the API URL.
-    const WP_API_URL = process.env.REACT_APP_WP_API_URL || 'https://www.mranderson.tech';
+    const WP_API_URL = process.env.REACT_APP_WP_API_URL;
+    if (!WP_API_URL) {
+      console.error("Contact form submission failed: REACT_APP_WP_API_URL is not set.");
+      setStatus('error');
+      return;
+    }
     const apiEndpoint = `${WP_API_URL}/wp-json/mranderson-api/v1/contact`;
 
     try {
