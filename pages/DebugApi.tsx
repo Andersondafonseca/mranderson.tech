@@ -64,7 +64,7 @@ const DebugApi: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Diagnóstico da API</h1>
           <p className="mt-4 text-lg text-slate-300">
-            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb).
+            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 2.0
           </p>
         </div>
 
