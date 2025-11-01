@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import Button from './Button';
+import { WP_API_URL } from '../config';
 
 const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '' }) => {
   const [formData, setFormData] = useState({
@@ -21,10 +22,8 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
     e.preventDefault();
     setStatus('submitting');
     
-    // Use the environment variable for the API URL.
-    const WP_API_URL = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
     if (!WP_API_URL) {
-      console.error("Contact form submission failed: REACT_APP_WORDPRESS_API_ENDPOINT is not set.");
+      console.error("Contact form submission failed: WP_API_URL is not set in config.ts.");
       setStatus('error');
       return;
     }

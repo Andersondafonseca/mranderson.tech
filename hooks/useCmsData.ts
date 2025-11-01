@@ -13,13 +13,10 @@ import {
     mockBookLandingPages,
     mockTestimonials
 } from '../data/mockData';
-
-// Use an environment variable for the WordPress API URL.
-// This makes the app configurable for deployment on platforms like Vercel.
-const WP_API_URL = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
+import { WP_API_URL } from '../config';
 
 if (!WP_API_URL) {
-  console.error("FATAL: REACT_APP_WORDPRESS_API_ENDPOINT environment variable is not set.");
+  console.error("FATAL: WP_API_URL is not set in config.ts.");
 }
 
 const API_BASE_URL_CUSTOM = `${WP_API_URL}/wp-json/mranderson-api/v1`;

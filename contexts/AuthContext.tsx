@@ -1,9 +1,9 @@
 
 import React, { createContext, useState, useContext, useEffect, ReactNode, useCallback } from 'react';
 import { User } from '../types';
+import { WP_API_URL } from '../config';
 
 // Use the environment variable for the WordPress API URL.
-const WP_API_URL = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
 const API_BASE_URL = WP_API_URL ? `${WP_API_URL}/wp-json/mranderson-api/v1` : '';
 
 
@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const authFetch = useCallback(async (endpoint: string, options: RequestInit = {}) => {
     if (!API_BASE_URL) {
-      throw new Error("API URL is not configured. Please set REACT_APP_WORDPRESS_API_ENDPOINT.");
+      throw new Error("API URL is not configured in config.ts.");
     }
     const token = user?.token || localStorage.getItem('authToken');
     const headers = new Headers(options.headers || {});

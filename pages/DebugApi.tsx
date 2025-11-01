@@ -1,39 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
+import { WP_API_URL } from '../config';
 
 const DebugApi: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [responseData, setResponseData] = useState<any>(null);
   const [errorData, setErrorData] = useState<any>(null);
 
-  const apiUrl = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
-  const testEndpoint = `${apiUrl}/wp-json/wp/v2/posts?per_page=1`;
-
-  // Collect all REACT_APP_ environment variables for debugging
-  const reactAppEnvVars: Record<string, string | undefined> = {};
-  // In a Create React App build, process.env is an object injected by the bundler.
-  // We can't iterate over the real `process.env`. The bundler replaces `process.env.REACT_APP_...`
-  // with its value at build time. To debug, we list known variables.
-  // This is a limitation, but for our specific case, it's what we can check.
-  const knownVars = [
-      'REACT_APP_WORDPRESS_API_ENDPOINT', 
-      'REACT_APP_WP_API_URL_NEW', 
-      'REACT_APP_WP_API_URL'
-  ];
-  knownVars.forEach(key => {
-      // The bundler will replace `process.env[key]` if it's a static string.
-      // A direct `process.env[key]` might not work, but `process.env.VAR_NAME` does.
-      if (key === 'REACT_APP_WORDPRESS_API_ENDPOINT') reactAppEnvVars[key] = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
-      if (key === 'REACT_APP_WP_API_URL_NEW') reactAppEnvVars[key] = process.env.REACT_APP_WP_API_URL_NEW;
-      if (key === 'REACT_APP_WP_API_URL') reactAppEnvVars[key] = process.env.REACT_APP_WP_API_URL;
-  });
-  // Filter out undefined ones
-  Object.keys(reactAppEnvVars).forEach(key => {
-      if(reactAppEnvVars[key] === undefined) {
-          delete reactAppEnvVars[key];
-      }
-  });
-
+  const apiUrl = WP_API_URL;
+  const testEndpoint = apiUrl ? `${apiUrl}/wp-json/wp/v2/posts?per_page=1` : '';
 
   const runTest = async () => {
     setStatus('loading');
@@ -43,8 +18,8 @@ const DebugApi: React.FC = () => {
     if (!apiUrl) {
       setStatus('error');
       setErrorData({
-        message: 'A variável de ambiente REACT_APP_WORDPRESS_API_ENDPOINT não está definida.',
-        details: 'Esta variável precisa ser configurada no seu ambiente de hospedagem (ex: Vercel) para que o site possa se conectar ao WordPress.'
+        message: 'A variável WP_API_URL não está definida no arquivo `config.ts`.',
+        details: 'Esta variável precisa ser configurada manualmente no código para que o site possa se conectar ao WordPress.'
       });
       return;
     }
@@ -90,14 +65,14 @@ const DebugApi: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Diagnóstico da API</h1>
           <p className="mt-4 text-lg text-slate-300">
-            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 4.0
+            Esta página testa a conexão entre o site e o seu WordPress. Versão 5.0 (Workaround Ativo)
           </p>
         </div>
 
         <div className="bg-gray-900 p-8 rounded-lg shadow-xl">
           <div className="mb-6">
             <h2 className="text-lg font-semibold text-slate-300">URL da API sendo testada:</h2>
-            <p className="font-mono text-amber-400 break-all">{apiUrl ? testEndpoint : 'Não configurada'}</p>
+            <p className="font-mono text-amber-400 break-all">{apiUrl ? testEndpoint : 'Não configurada em config.ts'}</p>
           </div>
 
           <div className="text-center mb-6">
@@ -120,7 +95,7 @@ const DebugApi: React.FC = () => {
             {status === 'success' && (
               <div className="p-4 bg-green-900/50 border border-green-700 rounded-md">
                 <h3 className="font-bold text-green-300"><i className="fas fa-check-circle mr-2"></i>Conexão bem-sucedida!</h3>
-                <p className="text-green-400 text-sm mt-2">O site conseguiu buscar os dados do WordPress. Se o conteúdo ainda não aparece, tente fazer um "Redeploy" na Vercel.</p>
+                <p className="text-green-400 text-sm mt-2">O site conseguiu buscar os dados do WordPress usando a URL do arquivo `config.ts`.</p>
                 <pre className="mt-4 bg-black/50 p-2 rounded text-xs text-slate-300 overflow-auto max-h-60">
                   {JSON.stringify(responseData, null, 2)}
                 </pre>
@@ -140,19 +115,16 @@ const DebugApi: React.FC = () => {
           
            {/* New Diagnostics Section */}
           <div className="mt-8 pt-6 border-t border-gray-700">
-            <h2 className="text-lg font-semibold text-slate-300">Variáveis de Ambiente Detectadas</h2>
+            <h2 className="text-lg font-semibold text-slate-300">Método de Configuração Atual</h2>
             <p className="text-sm text-slate-400 mb-4">
-              Esta seção mostra todas as variáveis de ambiente que começam com `REACT_APP_` que o site conseguiu ler durante o processo de build. Se a variável que você configurou na Vercel não aparecer aqui, o problema está na Vercel não a "injetando" no build.
+              Devido a um problema persistente com as variáveis de ambiente na Vercel, a URL da API do WordPress foi configurada diretamente no código como uma solução definitiva. O valor está centralizado no arquivo <code className="bg-gray-700 text-amber-300 px-1 rounded">config.ts</code>. Se precisar alterar a URL no futuro, edite apenas este arquivo.
             </p>
-            {Object.keys(reactAppEnvVars).length > 0 ? (
-              <pre className="bg-black/50 p-4 rounded text-xs text-slate-300 overflow-auto">
-                {JSON.stringify(reactAppEnvVars, null, 2)}
-              </pre>
-            ) : (
-              <div className="p-4 bg-yellow-900/50 border border-yellow-700 rounded-md">
-                <p className="text-yellow-300 font-semibold">Nenhuma variável de ambiente com prefixo `REACT_APP_` foi encontrada.</p>
-              </div>
-            )}
+            <div className="p-4 bg-yellow-900/50 border border-yellow-700 rounded-md">
+                <p className="text-yellow-300 font-semibold">
+                    <i className="fas fa-info-circle mr-2"></i>
+                    Lembre-se de remover as variáveis de ambiente (`REACT_APP_*`) do painel da Vercel para evitar confusão.
+                </p>
+            </div>
           </div>
         </div>
       </div>
