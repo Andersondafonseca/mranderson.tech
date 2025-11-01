@@ -32,7 +32,7 @@ export const mockBlogPosts: BlogPost[] = [
       <h3 class="text-2xl font-semibold mb-2 mt-6">Personalização em Escala</h3>
       <p class="mb-4">Uma das maiores contribuições da IA para as vendas é a capacidade de personalizar a abordagem em uma escala sem precedentes. Ferramentas de IA podem analisar dados de clientes em tempo real, identificar padrões de comportamento e prever necessidades futuras. Isso permite que as equipes de vendas criem propostas e comunicações altamente relevantes, aumentando significativamente as taxas de conversão.</p>
       <h3 class="text-2xl font-semibold mb-2 mt-6">Automação de Tarefas Repetitivas</h3>
-      <p>Vendedores gastam uma quantidade significativa de tempo em tarefas administrativas. A IA pode automatizar muitas dessas atividades, como qualificação de leads, agendamento de reuniões e follow-ups, liberando os vendedores para se concentrarem no que fazem de melhor: construir relacionamentos e fechar negócios.</p>
+      <p>Vendedores gastam uma quantidade significativa de tempo em tarefas administrativas. A IA pode automatizar muitas dessas atividades, como qualificação de leads, agendamento de reuniões e follow-ups, liberando os vendedores para se concentrem no que fazem de melhor: construir relacionamentos e fechar negócios.</p>
     `,
   },
   {

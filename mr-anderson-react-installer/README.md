@@ -159,6 +159,7 @@ Para que o menu do site seja gerenciável pelo WordPress, siga estes passos:
 2.  Clique em **"criar um novo menu"**.
 3.  **IMPORTANTE:** No campo "Nome do menu", digite exatamente `primary_api_menu`.
 4.  Adicione as páginas desejadas ao menu (Home, Sobre, Livros, etc.).
-5.  Clique em **"Salvar menu"**.
+5.  **Organize a Ordem:** Após adicionar os itens, você pode **clicar e arrastar** cada item para cima ou para baixo para definir a ordem exata em que eles devem aparecer no site.
+6.  Clique em **"Salvar menu"**.
 
-O React irá buscar automaticamente os itens deste menu específico.
+O React irá buscar e exibir os itens na ordem exata que você definiu aqui.
