@@ -9,7 +9,9 @@
  * Manutenção Futura:
  * Se a URL do seu WordPress mudar, ESTE É O ÚNICO LUGAR que você precisa alterar.
  */
-export const WP_API_URL = "http://mranderson1.hospedagemdesites.ws";
+// IMPORTANTE: A URL foi alterada para https para resolver o erro de Mixed Content.
+// O servidor WordPress PRECISA ter um certificado SSL ativo para que isso funcione.
+export const WP_API_URL = "https://mranderson1.hospedagemdesites.ws";
 
 /**
  * Verifica se a URL foi definida. Se estiver vazia, exibe um erro claro no console
