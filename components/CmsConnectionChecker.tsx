@@ -1,9 +1,10 @@
+
 import React from 'react';
 
 const CmsConnectionChecker: React.FC = () => {
   // Check if the environment variable is missing.
   // This variable is crucial for the app to connect to the WordPress backend.
-  const isApiUrlMissing = !process.env.REACT_APP_WP_API_URL;
+  const isApiUrlMissing = !process.env.REACT_APP_WP_API_URL_NEW;
 
   // Render the warning banner only if the URL is missing.
   if (!isApiUrlMissing) {
@@ -17,7 +18,7 @@ const CmsConnectionChecker: React.FC = () => {
     >
       <i className="fas fa-exclamation-triangle mr-2"></i>
       <strong>Atenção:</strong> A conexão com o WordPress não foi configurada. O site está exibindo dados de exemplo.
-      Por favor, defina a variável de ambiente `REACT_APP_WP_API_URL` nas configurações de sua hospedagem.
+      Por favor, defina a variável de ambiente `REACT_APP_WP_API_URL_NEW` nas configurações de sua hospedagem.
     </div>
   );
 };

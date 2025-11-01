@@ -6,7 +6,7 @@ const DebugApi: React.FC = () => {
   const [responseData, setResponseData] = useState<any>(null);
   const [errorData, setErrorData] = useState<any>(null);
 
-  const apiUrl = process.env.REACT_APP_WP_API_URL;
+  const apiUrl = process.env.REACT_APP_WP_API_URL_NEW;
   const testEndpoint = `${apiUrl}/wp-json/wp/v2/posts?per_page=1`;
 
   const runTest = async () => {
@@ -17,7 +17,7 @@ const DebugApi: React.FC = () => {
     if (!apiUrl) {
       setStatus('error');
       setErrorData({
-        message: 'A variável de ambiente REACT_APP_WP_API_URL não está definida.',
+        message: 'A variável de ambiente REACT_APP_WP_API_URL_NEW não está definida.',
         details: 'Esta variável precisa ser configurada no seu ambiente de hospedagem (ex: Vercel) para que o site possa se conectar ao WordPress.'
       });
       return;
@@ -64,7 +64,7 @@ const DebugApi: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Diagnóstico da API</h1>
           <p className="mt-4 text-lg text-slate-300">
-            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 2.0
+            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 3.0 (Teste de Variável)
           </p>
         </div>
 

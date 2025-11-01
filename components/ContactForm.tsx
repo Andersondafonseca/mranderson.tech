@@ -22,9 +22,9 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
     setStatus('submitting');
     
     // Use the environment variable for the API URL.
-    const WP_API_URL = process.env.REACT_APP_WP_API_URL;
+    const WP_API_URL = process.env.REACT_APP_WP_API_URL_NEW;
     if (!WP_API_URL) {
-      console.error("Contact form submission failed: REACT_APP_WP_API_URL is not set.");
+      console.error("Contact form submission failed: REACT_APP_WP_API_URL_NEW is not set.");
       setStatus('error');
       return;
     }
