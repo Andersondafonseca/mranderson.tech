@@ -6,8 +6,34 @@ const DebugApi: React.FC = () => {
   const [responseData, setResponseData] = useState<any>(null);
   const [errorData, setErrorData] = useState<any>(null);
 
-  const apiUrl = process.env.REACT_APP_WP_API_URL_NEW;
+  const apiUrl = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
   const testEndpoint = `${apiUrl}/wp-json/wp/v2/posts?per_page=1`;
+
+  // Collect all REACT_APP_ environment variables for debugging
+  const reactAppEnvVars: Record<string, string | undefined> = {};
+  // In a Create React App build, process.env is an object injected by the bundler.
+  // We can't iterate over the real `process.env`. The bundler replaces `process.env.REACT_APP_...`
+  // with its value at build time. To debug, we list known variables.
+  // This is a limitation, but for our specific case, it's what we can check.
+  const knownVars = [
+      'REACT_APP_WORDPRESS_API_ENDPOINT', 
+      'REACT_APP_WP_API_URL_NEW', 
+      'REACT_APP_WP_API_URL'
+  ];
+  knownVars.forEach(key => {
+      // The bundler will replace `process.env[key]` if it's a static string.
+      // A direct `process.env[key]` might not work, but `process.env.VAR_NAME` does.
+      if (key === 'REACT_APP_WORDPRESS_API_ENDPOINT') reactAppEnvVars[key] = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
+      if (key === 'REACT_APP_WP_API_URL_NEW') reactAppEnvVars[key] = process.env.REACT_APP_WP_API_URL_NEW;
+      if (key === 'REACT_APP_WP_API_URL') reactAppEnvVars[key] = process.env.REACT_APP_WP_API_URL;
+  });
+  // Filter out undefined ones
+  Object.keys(reactAppEnvVars).forEach(key => {
+      if(reactAppEnvVars[key] === undefined) {
+          delete reactAppEnvVars[key];
+      }
+  });
+
 
   const runTest = async () => {
     setStatus('loading');
@@ -17,7 +43,7 @@ const DebugApi: React.FC = () => {
     if (!apiUrl) {
       setStatus('error');
       setErrorData({
-        message: 'A variável de ambiente REACT_APP_WP_API_URL_NEW não está definida.',
+        message: 'A variável de ambiente REACT_APP_WORDPRESS_API_ENDPOINT não está definida.',
         details: 'Esta variável precisa ser configurada no seu ambiente de hospedagem (ex: Vercel) para que o site possa se conectar ao WordPress.'
       });
       return;
@@ -64,7 +90,7 @@ const DebugApi: React.FC = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Diagnóstico da API</h1>
           <p className="mt-4 text-lg text-slate-300">
-            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 3.0 (Teste de Variável)
+            Esta página testa a conexão entre o site (Vercel) e o seu WordPress (Locaweb). Versão 4.0
           </p>
         </div>
 
@@ -108,6 +134,23 @@ const DebugApi: React.FC = () => {
                     <p className="font-bold">Detalhes/Solução:</p>
                     <p>{typeof errorData?.details === 'string' ? errorData.details : JSON.stringify(errorData?.details, null, 2)}</p>
                 </div>
+              </div>
+            )}
+          </div>
+          
+           {/* New Diagnostics Section */}
+          <div className="mt-8 pt-6 border-t border-gray-700">
+            <h2 className="text-lg font-semibold text-slate-300">Variáveis de Ambiente Detectadas</h2>
+            <p className="text-sm text-slate-400 mb-4">
+              Esta seção mostra todas as variáveis de ambiente que começam com `REACT_APP_` que o site conseguiu ler durante o processo de build. Se a variável que você configurou na Vercel não aparecer aqui, o problema está na Vercel não a "injetando" no build.
+            </p>
+            {Object.keys(reactAppEnvVars).length > 0 ? (
+              <pre className="bg-black/50 p-4 rounded text-xs text-slate-300 overflow-auto">
+                {JSON.stringify(reactAppEnvVars, null, 2)}
+              </pre>
+            ) : (
+              <div className="p-4 bg-yellow-900/50 border border-yellow-700 rounded-md">
+                <p className="text-yellow-300 font-semibold">Nenhuma variável de ambiente com prefixo `REACT_APP_` foi encontrada.</p>
               </div>
             )}
           </div>

@@ -16,10 +16,10 @@ import {
 
 // Use an environment variable for the WordPress API URL.
 // This makes the app configurable for deployment on platforms like Vercel.
-const WP_API_URL = process.env.REACT_APP_WP_API_URL_NEW;
+const WP_API_URL = process.env.REACT_APP_WORDPRESS_API_ENDPOINT;
 
 if (!WP_API_URL) {
-  console.error("FATAL: REACT_APP_WP_API_URL_NEW environment variable is not set.");
+  console.error("FATAL: REACT_APP_WORDPRESS_API_ENDPOINT environment variable is not set.");
 }
 
 const API_BASE_URL_CUSTOM = `${WP_API_URL}/wp-json/mranderson-api/v1`;
