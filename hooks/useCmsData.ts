@@ -1,4 +1,5 @@
 
+
 import { useCallback } from 'react';
 import { BlogPost, Project, SpeakingTopic, TimelineEvent, Book, BookLandingPageData, NavLink, SocialLinks, SpeakingPageData, Testimonial, ExclusiveVideo, CommunityQuestion } from '../types';
 import { 
@@ -60,15 +61,31 @@ async function fetchData<T>(endpoint: string, baseUrl: string): Promise<T | null
 // These functions translate the raw data from the WP REST API (with ACF fields)
 // into the specific TypeScript types our application components expect.
 
-const mapWpPostToBlogPost = (post: any): BlogPost => ({
-    slug: post.slug || '',
-    title: post.title?.rendered || 'Post sem título',
-    summary: post.excerpt?.rendered.replace(/<p>|<\/p>|\[&hellip;\]/g, '').trim() || '',
-    imageUrl: post.fimg_url || `https://picsum.photos/seed/${post.id}/800/600`,
-    category: post.categories_names?.[0] || 'Sem categoria',
-    publishDate: post.date || new Date().toISOString(),
-    content: post.content?.rendered || '',
-});
+const mapWpPostToBlogPost = (post: any): BlogPost => {
+    let rawSummary = post.excerpt?.rendered || '';
+    
+    // Find the "more" link and truncate the string before it to remove "Continuar lendo..."
+    const moreLinkIndex = rawSummary.indexOf('<a class="more-link"');
+    if (moreLinkIndex !== -1) {
+        rawSummary = rawSummary.substring(0, moreLinkIndex);
+    }
+    
+    // Strip all HTML tags and decode common entities for a clean summary
+    const cleanSummary = rawSummary.replace(/<[^>]*>/g, '')
+                                 .replace(/\[&hellip;\]/g, '...')
+                                 .replace(/&hellip;/g, '...')
+                                 .trim();
+
+    return {
+        slug: post.slug || '',
+        title: post.title?.rendered || 'Post sem título',
+        summary: cleanSummary,
+        imageUrl: post.fimg_url || `https://picsum.photos/seed/${post.id}/800/600`,
+        category: post.categories_names?.[0] || 'Sem categoria',
+        publishDate: post.date || new Date().toISOString(),
+        content: post.content?.rendered || '',
+    };
+};
 
 const mapWpProjectToProject = (project: any): Project => ({
     name: project.acf?.name || project.title?.rendered || 'Projeto sem nome',
