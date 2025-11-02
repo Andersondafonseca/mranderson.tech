@@ -9,6 +9,12 @@ const DebugApi: React.FC = () => {
   const apiUrl = WP_API_URL;
   const testEndpoint = apiUrl ? `${apiUrl}/wp-json/wp/v2/posts?per_page=1` : '';
 
+  // Define strings with special characters as variables to avoid JSX parsing issues.
+  const configGeralText = 'Configurações > Geral';
+  const httpText = 'http://';
+  const httpsText = 'https://';
+
+
   const runTest = async () => {
     setStatus('loading');
     setResponseData(null);
@@ -37,7 +43,15 @@ const DebugApi: React.FC = () => {
                     <p className="font-bold">Solução Definitiva (2 passos):</p>
                     <ol className="list-decimal list-inside mt-2 space-y-1">
                         <li><strong>Ative o SSL no WordPress:</strong> Peça ao seu provedor de hospedagem para instalar o certificado SSL (Let's Encrypt) no domínio <code className="bg-gray-700 text-amber-300 px-1 rounded">mranderson1.hospedagemdesites.ws</code>.</li>
-                        <li><strong>Atualize a URL no WordPress:</strong> Após o SSL estar ativo, vá em <code className="bg-gray-700 text-amber-300 px-1 rounded">{'Configurações > Geral'}</code> no seu painel do WordPress e mude as duas URLs de <code className="bg-gray-700 text-amber-300 px-1 rounded">{'http://'}</code> para <code className="bg-gray-700 text-amber-300 px-1 rounded">{'https://'}</code>.</li>
+                        <li>
+                          <strong>Atualize a URL no WordPress:</strong>
+                          {' Após o SSL estar ativo, vá em '}
+                          <code className="bg-gray-700 text-amber-300 px-1 rounded">{configGeralText}</code>
+                          {' no seu painel do WordPress e mude as duas URLs de '}
+                          <code className="bg-gray-700 text-amber-300 px-1 rounded">{httpText}</code>
+                          {' para '}
+                          <code className="bg-gray-700 text-amber-300 px-1 rounded">{httpsText}</code>.
+                        </li>
                     </ol>
                     <p className="mt-3">O código do site (no arquivo `config.ts`) já foi atualizado para usar `https`. Assim que você ajustar o servidor, a conexão funcionará.</p>
                 </div>
