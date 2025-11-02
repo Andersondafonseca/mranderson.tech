@@ -27,7 +27,6 @@ import CmsConnectionChecker from './components/CmsConnectionChecker';
 import Domains from './pages/Domains';
 import Dns from './pages/Dns';
 import DebugApi from './pages/DebugApi';
-import ForceRebuild from './components/ForceRebuild';
 
 
 // Exclusive Area Sub-Pages
@@ -51,12 +50,6 @@ const App: React.FC = () => {
     <HashRouter>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-black text-slate-200">
-        {/* START: Cache Busting Banner */}
-        <div className="bg-green-600 text-white text-center p-2 text-sm font-bold" role="status">
-          Build Version: 7.0 - Se você vê esta mensagem, o cache foi limpo.
-        </div>
-        <ForceRebuild />
-        {/* END: Cache Busting Banner */}
         <CmsConnectionChecker />
         <Header />
         <main className="flex-grow">
