@@ -185,15 +185,14 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     amazonLink: 'https://loja.uiclap.com/titulo/ua109218/',
     
     // Section 1: Hero
-    heroHeadline: 'O livro que abre as 7 portas para transformar sua carreira em TI — e mostra quais você NÃO deve atravessar.',
-    heroSubheadline: 'Um guia prático e direto ao ponto para navegar no complexo mundo da tecnologia, evitar armadilhas e construir uma carreira de sucesso e propósito.',
+    heroHeadline: 'Pare de desperdiçar tempo e dinheiro tentando entrar na TI no escuro.',
+    heroSubheadline: 'Um mapa claro das 7 áreas que realmente sustentam o mercado tech. Para você escolher seu caminho, evitar atalhos furados e entrar com estratégia.',
     heroCtaText: 'Quero meu exemplar agora',
     coverImageUrl: 'https://storage.googleapis.com/images.uiclap.com/capa/ua109218.jpg',
-    youtubeVideoId: 'LXb3EKWsInQ', // Example video ID
 
     // Section 2: Storytelling
-    problemStatement: 'Você já sentiu que está perdendo tempo com cursos, certificações e caminhos que não levam a lugar nenhum?',
-    empathyStatement: 'Eu também passei por isso. Foram anos de tentativa e erro, investindo em "atalhos" que só me atrasaram. Foi essa jornada que me permitiu mapear as verdadeiras portas para o sucesso em TI.',
+    problemStatement: 'Você estuda, faz curso, pega certificação… e mesmo assim não sabe qual é o próximo passo certo para conseguir vaga em TI?',
+    empathyStatement: 'Eu também já caí nessa. E foi justamente por ter visto o que funciona e o que atrasa de verdade, que eu organizei um caminho simples: entenda as 7 portas da TI, escolha uma porta para começar e avance com critério.',
 
     // Section 3: Author
     authorImageUrl: 'https://as7portas1.websiteseguro.com/mranderson2.png',
@@ -206,18 +205,18 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     authorQuote: 'Escrevi este livro para ser o guia que eu gostaria de ter recebido no início da minha carreira: sem enrolação, direto ao ponto e focado no que realmente gera resultado.',
 
     // Section 4: Benefits
-    benefitsTitle: 'O que você vai encontrar no livro',
+    benefitsTitle: 'O que este livro te entrega (na prática)',
     benefits: [
-        { icon: 'fas fa-map-signs', title: 'Onde investir seu tempo', description: 'Descubra quais são as áreas e habilidades que realmente importam para construir uma base sólida e se destacar no mercado.' },
-        { icon: 'fas fa-door-closed', title: 'Evitar as portas erradas', description: 'Aprenda a identificar os "atalhos" que parecem bons, mas que na verdade atrasam sua carreira e seu desenvolvimento.' },
-        { icon: 'fas fa-user-tie', title: 'Conquistar autoridade', description: 'Veja o passo a passo para se posicionar como um especialista, mesmo sem ter anos de experiência formal na área.' },
-        { icon: 'fas fa-comments-dollar', title: 'Conectar TI e Negócios', description: 'Entenda como alinhar suas habilidades técnicas com os objetivos da empresa para gerar mais valor e ser mais reconhecido.' },
-        { icon: 'fas fa-chart-line', title: 'Acelerar seu crescimento', description: 'Domine as competências comportamentais e estratégicas que diferenciam os profissionais comuns dos de alto impacto.' },
-        { icon: 'fas fa-key', title: 'Destravar seu potencial', description: 'Um mapa completo para você tomar as rédeas da sua carreira e construir uma trajetória de sucesso e propósito em TI.' },
+        { icon: 'fas fa-map-signs', title: 'Onde investir seu tempo', description: 'Você para de estudar aleatório. Entende o que dá retorno e o que é só barulho.' },
+        { icon: 'fas fa-door-closed', title: 'Evitar as portas erradas', description: 'Os atalhos mais comuns que parecem acelerar. Mas te deixam sem base e sem vaga.' },
+        { icon: 'fas fa-user-tie', title: 'Conquistar autoridade', description: 'Como mostrar valor mesmo como iniciante: portfólio, postura e narrativa profissional.' },
+        { icon: 'fas fa-comments-dollar', title: 'Conectar TI e Negócios', description: 'O que as empresas realmente compram: impacto, clareza e execução. Não só “tecnologia”.' },
+        { icon: 'fas fa-chart-line', title: 'Acelerar seu crescimento', description: 'Competências que destravam promoção: comunicação, entrega, priorização e responsabilidade.' },
+        { icon: 'fas fa-key', title: 'Destravar seu potencial', description: 'Um mapa para sair do “quero trabalhar com TI” para “eu sei exatamente por onde começo”.' },
     ],
 
     // Section 5: Testimonials
-    testimonialsTitle: 'O que os leitores estão dizendo',
+    testimonialsTitle: 'Provas sociais (gente real, resultado real)',
     testimonials: [
         { quote: 'Um guia essencial para quem quer crescer em TI. Leitura obrigatória!', author: 'Podcafé Tech', role: 'Podcast de Tecnologia' },
         { quote: 'Claro, objetivo e cheio de insights práticos. Me ajudou a redefinir meus próximos passos na carreira.', author: 'Ana Silva', role: 'Desenvolvedora Sênior' },
@@ -225,17 +224,17 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     ],
 
     // Section 6: Offer + Bonus
-    offerPrice: 'Disponível na UICLAP',
-    offerCtaText: 'Garanta seu exemplar agora',
+    offerPrice: 'Disponível na UICLAP agora',
+    offerCtaText: 'Quero comprar na UICLAP',
     bonus: {
-        title: 'BÔNUS EXCLUSIVO: Checklist de Carreira',
-        description: 'Ao adquirir o livro hoje, você recebe um checklist digital para avaliar seu momento atual e planejar seus próximos passos na carreira de forma estratégica.',
+        title: 'BÔNUS: Checklist de Carreira (pra sair do zero com clareza)',
+        description: 'Um checklist simples para você: escolher uma porta para começar, definir rotina de estudos e montar um plano de 30 dias para ganhar tração.',
     },
     
     // Section 7: Final CTA
-    finalCtaTitle: 'Pronto para abrir as portas do seu futuro?',
-    finalCtaButtonText: 'Sim, quero abrir as 7 Portas da TI e acelerar minha carreira',
-    guaranteeText: 'Satisfação garantida ou seu dinheiro de volta em 7 dias.',
+    finalCtaTitle: 'Você pode continuar no “modo tentativa e erro”… ou pode seguir um mapa.',
+    finalCtaButtonText: 'Quero meu exemplar e o Checklist',
+    guaranteeText: 'Compra segura. Se não fizer sentido para você, você não precisa continuar.',
   }
 ];
 
