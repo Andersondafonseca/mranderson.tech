@@ -182,7 +182,7 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     slug: 'as-7-portas-da-ti',
     pageTitle: 'Livro: As 7 Portas da TI',
     pageDescription: 'O guia definitivo para transformar sua carreira em TI, escrito por Mr. Anderson.',
-    amazonLink: 'https://www.amazon.com.br/',
+    amazonLink: 'https://loja.uiclap.com/titulo/ua109218/',
     
     // Section 1: Hero
     heroHeadline: 'O livro que abre as 7 portas para transformar sua carreira em TI — e mostra quais você NÃO deve atravessar.',
@@ -225,7 +225,7 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     ],
 
     // Section 6: Offer + Bonus
-    offerPrice: 'R$ 49,90',
+    offerPrice: 'Disponível na UICLAP',
     offerCtaText: 'Garanta seu exemplar agora',
     bonus: {
         title: 'BÔNUS EXCLUSIVO: Checklist de Carreira',
