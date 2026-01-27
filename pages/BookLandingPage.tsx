@@ -96,23 +96,29 @@ const BookLandingPage: React.FC = () => {
                 {pageData.heroHeadline}
               </h1>
               <p className="mt-6 text-lg md:text-xl text-slate-300">{pageData.heroSubheadline}</p>
-              <div className="mt-10">
+              <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <Button onClick={handleCtaClick} variant="primary" className="w-full sm:w-auto">
                   {pageData.heroCtaText}
                 </Button>
+
+                {pageData.youtubeVideoId && (
+                  <Button onClick={openVideoModal} variant="secondary" className="w-full sm:w-auto">
+                    Assistir vídeo
+                  </Button>
+                )}
               </div>
             </div>
 
             <div className="flex justify-center">
               <div
-                role={pageData.youtubeVideoId ? 'button' : undefined}
-                tabIndex={pageData.youtubeVideoId ? 0 : -1}
-                aria-label={pageData.youtubeVideoId ? 'Assistir vídeo de apresentação' : undefined}
-                className={`relative group ${pageData.youtubeVideoId ? 'cursor-pointer' : ''}`}
-                onClick={openVideoModal}
+                role="button"
+                tabIndex={0}
+                aria-label="Ir para o checkout"
+                className="relative group cursor-pointer"
+                onClick={handleCtaClick}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
-                    openVideoModal();
+                    handleCtaClick();
                   }
                 }}
               >
@@ -127,9 +133,9 @@ const BookLandingPage: React.FC = () => {
                 />
 
                 {pageData.youtubeVideoId && (
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center rounded-lg">
-                    <div className="w-20 h-20 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white text-4xl opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300">
-                      <i className="fas fa-play"></i>
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center rounded-lg">
+                    <div className="text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50 px-3 py-2 rounded-full">
+                      Comprar agora
                     </div>
                   </div>
                 )}
