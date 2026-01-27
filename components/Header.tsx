@@ -34,6 +34,9 @@ const Header: React.FC = () => {
   const activeLinkClass = 'text-amber-400 font-semibold';
   const inactiveLinkClass = 'text-slate-300 hover:text-amber-400 transition-colors duration-300';
 
+  // Temporary optimization: since there is only one book right now, send "Livros" directly to its landing page.
+  const normalizeNavPath = (path: string) => (path === '/livros' ? '/livros/as-7-portas-da-ti' : path);
+
   const SearchButton: React.FC<{className?: string}> = ({ className = ''}) => (
      <button
         onClick={() => setIsSearchOpen(true)}
@@ -103,7 +106,7 @@ const Header: React.FC = () => {
                 {navLinks.map(link => (
                   <NavLink
                     key={link.path}
-                    to={link.path}
+                    to={normalizeNavPath(link.path)}
                     // The `end` prop is crucial for the home link to not stay active on other pages
                     end={link.path === '/'}
                     className={({ isActive }) => (isActive ? activeLinkClass : inactiveLinkClass)}
@@ -142,7 +145,7 @@ const Header: React.FC = () => {
               {navLinks.map(link => (
                 <NavLink
                   key={link.path}
-                  to={link.path}
+                  to={normalizeNavPath(link.path)}
                   onClick={() => setIsMenuOpen(false)}
                    // The `end` prop is crucial for the home link to not stay active on other pages
                   end={link.path === '/'}
