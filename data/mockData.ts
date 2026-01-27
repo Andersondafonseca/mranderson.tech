@@ -172,7 +172,7 @@ export const mockBooks: Book[] = [
         slug: 'as-7-portas-da-ti',
         title: 'As 7 Portas da TI',
         summary: 'O guia definitivo para transformar sua carreira em TI, evitando armadilhas e construindo um caminho de sucesso e propósito.',
-        coverImageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQG0i-v0KWsSKA/feedshare-shrink_800/B4DZlUGZXcJgAk-/0/1758052589465?e=1762387200&v=beta&t=F1QyEIVqTGRewI-qAE4oiBu1qfFI6emo9VbUnf9aofc',
+        coverImageUrl: 'https://storage.googleapis.com/images.uiclap.com/capa/ua109218.jpg',
     },
     // Futuros livros podem ser adicionados aqui
 ];
@@ -188,7 +188,7 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     heroHeadline: 'O livro que abre as 7 portas para transformar sua carreira em TI — e mostra quais você NÃO deve atravessar.',
     heroSubheadline: 'Um guia prático e direto ao ponto para navegar no complexo mundo da tecnologia, evitar armadilhas e construir uma carreira de sucesso e propósito.',
     heroCtaText: 'Quero meu exemplar agora',
-    coverImageUrl: 'https://media.licdn.com/dms/image/v2/D4D22AQG0i-v0KWsSKA/feedshare-shrink_800/B4DZlUGZXcJgAk-/0/1758052589465?e=1762387200&v=beta&t=F1QyEIVqTGRewI-qAE4oiBu1qfFI6emo9VbUnf9aofc',
+    coverImageUrl: 'https://storage.googleapis.com/images.uiclap.com/capa/ua109218.jpg',
     youtubeVideoId: 'LXb3EKWsInQ', // Example video ID
 
     // Section 2: Storytelling
