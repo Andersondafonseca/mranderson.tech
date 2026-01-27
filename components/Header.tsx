@@ -17,8 +17,10 @@ const Header: React.FC = () => {
   useEffect(() => {
     const fetchNavLinks = async () => {
         const data = await getNavLinks();
-        // The menu from the CMS is now the single source of truth.
-        setNavLinks(data);
+        // CMS menu is the source of truth, but we ensure the /links page is always reachable.
+        const hasLinks = data.some(l => l.path === '/links');
+        const next = hasLinks ? data : [...data, { name: 'Links', path: '/links' }];
+        setNavLinks(next);
     };
     fetchNavLinks();
   }, [getNavLinks]);
