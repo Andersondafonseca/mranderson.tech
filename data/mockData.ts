@@ -225,7 +225,7 @@ export const mockBookLandingPages: BookLandingPageData[] = [
     ],
 
     // Section 6: Offer + Bonus
-    : 'R$ 49,90',
+    offerPrice: 'R$ 49,90',
     offerCtaText: 'Garanta seu exemplar agora',
     bonus: {
         title: 'BÔNUS EXCLUSIVO: Checklist de Carreira',
