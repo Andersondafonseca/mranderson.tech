@@ -156,6 +156,12 @@ const packages: PackageCard[] = [
 
 const Speaking: React.FC = () => {
   const [pageData, setPageData] = useState<SpeakingPageData | null>(null);
+
+  const scrollToSection = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [mcEvents, setMcEvents] = useState<string[]>([]);
   const [mentorship, setMentorship] = useState<MentorshipInfo | null>(null);
@@ -198,12 +204,14 @@ const Speaking: React.FC = () => {
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <a
                     href="#contato"
+                    onClick={scrollToSection('contato')}
                     className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-amber-500 text-black font-bold hover:bg-amber-400 transition"
                   >
                     Solicitar proposta
                   </a>
                   <a
                     href="#temas"
+                    onClick={scrollToSection('temas')}
                     className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-gray-700 text-slate-100 font-semibold hover:border-amber-400 hover:text-amber-300 transition"
                   >
                     Ver palestras e pacotes
