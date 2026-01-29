@@ -223,7 +223,7 @@ const Speaking: React.FC = () => {
                 <img
                   src={pageData?.featuredImageUrl || imgStage1}
                   alt="Mr. Anderson palestrando"
-                  className="w-full h-[320px] md:h-[420px] object-cover"
+                  className="w-full h-[320px] md:h-[420px] object-cover object-top"
                   loading="eager"
                   onError={(e) => {
                     const img = e.currentTarget;
