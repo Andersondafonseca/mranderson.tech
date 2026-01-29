@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import Button from './Button';
-import { WP_API_URL } from '../config';
 
 const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '' }) => {
   const [formData, setFormData] = useState({
@@ -21,13 +20,8 @@ const ContactForm: React.FC<{ subjectDefault?: string }> = ({ subjectDefault = '
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-    
-    if (!WP_API_URL) {
-      console.error("Contact form submission failed: WP_API_URL is not set in config.ts.");
-      setStatus('error');
-      return;
-    }
-    const apiEndpoint = `${WP_API_URL}/wp-json/mranderson-api/v1/contact`;
+
+    const apiEndpoint = `/api/contact`;
 
     try {
         const response = await fetch(apiEndpoint, {
