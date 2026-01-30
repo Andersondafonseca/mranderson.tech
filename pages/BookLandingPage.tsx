@@ -70,8 +70,12 @@ const BookLandingPage: React.FC = () => {
     );
   }
 
+  const isAs7Portas = slug === 'as-7-portas-da-ti';
+  const promoAmazonLink = 'https://a.co/d/11wy3HD';
+  const amazonLink = isAs7Portas ? promoAmazonLink : pageData.amazonLink;
+
   const handleCtaClick = () => {
-    window.open(pageData.amazonLink, '_blank');
+    window.open(amazonLink, '_blank');
   };
 
   const openVideoModal = () => {
@@ -89,7 +93,8 @@ const BookLandingPage: React.FC = () => {
             <div className="text-center md:text-left">
               <div className="mb-4">
                 <span className="bg-amber-400 text-black text-sm font-bold inline-block px-4 py-1 rounded-full uppercase tracking-wider">
-                  <i className="fas fa-star mr-2"></i>Autor Best-Seller na Amazon
+                  <i className="fas fa-star mr-2"></i>
+                  {isAs7Portas ? 'E-book por R$ 9,90 (lançamento)' : 'Autor Best-Seller na Amazon'}
                 </span>
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-100 leading-tight">
@@ -98,7 +103,7 @@ const BookLandingPage: React.FC = () => {
               <p className="mt-6 text-lg md:text-xl text-slate-300">{pageData.heroSubheadline}</p>
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <Button onClick={handleCtaClick} variant="primary" className="w-full sm:w-auto">
-                  {pageData.heroCtaText}
+                  {isAs7Portas ? 'Comprar e-book na Amazon (R$ 9,90)' : pageData.heroCtaText}
                 </Button>
 
                 {pageData.youtubeVideoId && (
