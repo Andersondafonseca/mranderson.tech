@@ -5,10 +5,10 @@ import { mockCredentials, mockTestimonials } from '../data/mockData';
 import FadeIn from '../components/FadeIn';
 import Button from '../components/Button';
 
-// High-resolution photos for media use
+// Fotos para uso em mídia (hospedadas localmente para evitar bloqueios do LinkedIn)
 const mediaPhotos = [
-  { url: 'https://media.licdn.com/dms/image/v2/D4D22AQFZMGzpFWlZOA/feedshare-shrink_1280/feedshare-shrink_1280/0/1727904507228?e=1762387200&v=beta&t=5FXMHzzB_atB72oFqJa_8tEi0w3qLoqoHCFBFCmQcYQ', description: 'Mr. Anderson - Retrato Profissional' },
-  { url: 'https://media.licdn.com/dms/image/v2/D4D22AQG6sOTEG5iwQg/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1724967384975?e=1762387200&v=beta&t=TjM4Kyi9-m5rdEylVl-ewXc7C5adw4pRNEGRYyx9hHc', description: 'Mr. Anderson - Palestrando no Palco' }
+  { url: '/media/mr-anderson-1.jpg', description: 'Mr. Anderson - Retrato Profissional' },
+  { url: '/media/mr-anderson-2.jpg', description: 'Mr. Anderson - Palestrando no Palco' }
 ];
 
 const Section: React.FC<{title: string, children: React.ReactNode, className?: string}> = ({title, children, className}) => (
@@ -41,7 +41,7 @@ const MediaKit: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <FadeIn>
                     <div className="text-center mb-16">
-                        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Media Kit</h1>
+                        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100">Mídia Kit</h1>
                         <p className="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
                             Recursos para imprensa, organizadores de eventos e parceiros. Aqui você encontrará biografias, fotos em alta resolução e outras informações úteis.
                         </p>

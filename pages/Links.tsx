@@ -16,8 +16,8 @@ const links: LinkItem[] = [
     to: '/palestras',
   },
   {
-    title: 'Media Kit',
-    description: 'Bio, fotos oficiais e informações para imprensa/eventos.',
+    title: 'Mídia Kit',
+    description: 'Bio, fotos oficiais e informações para imprensa e eventos.',
     to: '/media-kit',
   },
   {
@@ -52,7 +52,7 @@ const Links: React.FC = () => {
             <p className="mt-4 text-lg text-slate-300">
               Tudo em um só lugar.
               <br />
-              Convites, media kit, livros e contato.
+              Convites, mídia kit, livros e contato.
             </p>
           </FadeIn>
 

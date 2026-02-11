@@ -8,7 +8,7 @@ export const mockNavLinks: NavLink[] = [
     { name: 'Palestras', path: '/palestras' },
     { name: 'Blog', path: '/blog' },
     { name: 'Projetos', path: '/projetos' },
-    { name: 'Media Kit', path: '/media-kit' },
+    { name: 'Mídia Kit', path: '/media-kit' },
     { name: 'Contato', path: '/contato' },
 ];
 
