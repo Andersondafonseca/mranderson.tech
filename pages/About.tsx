@@ -31,8 +31,8 @@ const About: React.FC = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
                           <div className="flex justify-center md:justify-start">
                               <img
-                                  src="https://media.licdn.com/dms/image/v2/D4D22AQFZMGzpFWlZOA/feedshare-shrink_1280/feedshare-shrink_1280/0/1727904507228?e=1762387200&v=beta&t=5FXMHzzB_atB72oFqJa_8tEi0w3qLoqoHCFBFCmQcYQ"
-                                  alt="Mr. Anderson palestrando"
+                                  src="/media/mr-anderson-1.jpg"
+                                  alt="Mr. Anderson"
                                   className="w-64 h-64 object-cover rounded-full border-4 border-amber-400 tech-glow"
                               />
                           </div>
