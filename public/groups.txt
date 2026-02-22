@@ -1,0 +1,5 @@
+# Um link de grupo por linha.
+# Quando um grupo lotar, mova o link dele para baixo.
+# Linhas começando com # são ignoradas.
+
+https://chat.whatsapp.com/HnVVI9Q5TxX6cDLfPiwSJf?mode=gi_t

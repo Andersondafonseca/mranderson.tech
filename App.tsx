@@ -16,6 +16,8 @@ import Contact from './pages/Contact';
 import Projects from './pages/Projects';
 import MediaKit from './pages/MediaKit';
 import Links from './pages/Links';
+import Inscricao from './pages/Inscricao';
+import Obrigado from './pages/Obrigado';
 
 // New Pages and Components
 import Login from './pages/Login';
@@ -68,6 +70,8 @@ const App: React.FC = () => {
             <Route path="/projetos" element={<Projects />} />
             <Route path="/media-kit" element={<MediaKit />} />
             <Route path="/links" element={<Links />} />
+            <Route path="/inscricao" element={<Inscricao />} />
+            <Route path="/obrigado" element={<Obrigado />} />
 
             <Route path="/login" element={<Login />} />
             <Route path="/domains" element={<Domains />} />
