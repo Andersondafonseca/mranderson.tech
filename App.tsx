@@ -18,6 +18,7 @@ import MediaKit from './pages/MediaKit';
 import Links from './pages/Links';
 import Inscricao from './pages/Inscricao';
 import Obrigado from './pages/Obrigado';
+import Recupere10Horas from './pages/Recupere10Horas';
 
 // New Pages and Components
 import Login from './pages/Login';
@@ -72,6 +73,7 @@ const App: React.FC = () => {
             <Route path="/links" element={<Links />} />
             <Route path="/inscricao" element={<Inscricao />} />
             <Route path="/obrigado" element={<Obrigado />} />
+            <Route path="/10horas" element={<Recupere10Horas />} />
 
             <Route path="/login" element={<Login />} />
             <Route path="/domains" element={<Domains />} />
